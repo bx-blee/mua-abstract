@@ -1,0 +1,4 @@
+(mua-abstract
+  :fetcher github
+  :repo "bx-blee/mua-abstract"
+  :files ("*.el"))
