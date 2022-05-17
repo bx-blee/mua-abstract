@@ -1,28 +1,41 @@
 ;;; mua-abstract.el --- Map Abstract MUA To Concrete MUA  -*- lexical-binding: t; -*-
 
-
 (orgCmntBegin "
-* Main Package File
-** But core documentation is in [[file:bmr-model.el]]
+* Summary: Main Package File. But core documentation is in [[file:bmr-model.el]].
 " orgCmntEnd)
 
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
 (orgCmntBegin "
-* Libre-Halaal Software --- Part Of Blee ---  COMEEGA Format.
+* Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
 ** This is Libre-Halaal Software. © Libre-Halaal Foundation. Subject to AGPL.
 ** It is not part of Emacs. It is part of Blee.
-** Best read and edited  with Polymode COMEEGA (Colaborative Org-Mode Enhance Emacs Generalized Authorship)
+** Best read and edited  with Poly-COMEEGA (Polymode Colaborative Org-Mode Enhance Emacs Generalized Authorship)
 " orgCmntEnd)
-;;; DBLOCK_END
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/authors :authors ("./inserts/authors-mb.org")
 (orgCmntBegin "
 * Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
 " orgCmntEnd)
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/orgTopControls :outLevel 1
+(orgCmntBegin "
+*  ~ORG-TOP-CONTROLS-COME-HERE~
+" orgCmntEnd)
+;;;#+END:
 
 (orgCmntBegin "
-*      ================ Requires
+* Relevant Panels:
+** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
+* Planned Improvements:
 " orgCmntEnd)
+
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "REQUIRES" :extraInfo "Imports"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _REQUIRES_: |]]  Imports  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
 
 (require 'gnus)
 (require 'gnus-srvr)
@@ -34,69 +47,133 @@
 (require 'bmr-method-inject-qmail)
 (require 'mua-gnus)
 
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
 
-;;; (b:gnus:manifest/filesList-add)
-(defun b:mrm:manifest/filesList-activate ()
-  " #+begin_org
-** Based on the specified profile setup Gnus variables.
-** Incomplete Aspects:
-*** Provide an argument and read if not provided.
+(defvar b:pkg:mua-abstract:version "0.1"
+   " #+begin_org
+** =b:pkg:mua-abstract:version= version number of the entirety of ua-abstract.
 #+end_org "
-  (loop-for-each each b:mrm:manifest:filesList
-    (b:mrm:manifest/activate each)
-    ))
+  )
+
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Blee Package Information" :extraInfo "Canonical"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Blee Package Information_: |]]  Canonical  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg:mua-abstract/version"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:pkg:mua-abstract|version>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:pkg:mua-abstract/version (
+;;;#+END:
+                                )
+   " #+begin_org
+** DocStr: mua-abstract package version number.
+#+end_org "
+   (interactive)
+   b:pkg:mua-abstract:version)
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:pkg:mua-abstract/version)
+#+END_SRC
+
+#+RESULTS:
+: 0.1
+
+" orgCmntEnd)
+
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Concept: <<Manifest Activation>>" :extraInfo "Based on file/s to load"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Concept: Manifest Activation_: |]]  Based on file/s to load  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
+(orgCmntBegin "
+List of files specified in:
+" orgCmntEnd)
 
 
-;;; (call-interactively 'b:gnus:manifest/activate)
-;;; (load "/bxo/iso/piu_mbFullUsage/profiles/gnus/com.gmail@mohsen.byname/mailService-manifest.el")
-;;; (b:gnus:manifest/activate "/bxo/iso/piu_mbFullUsage/profiles/gnus/com.gmail@mohsen.byname/mailService-manifest.el")
-;;; (b:gnus:manifest/activate "/bxo/iso/piu_mbFullUsage/profiles/gnus/io.gmane.news/gnus-usenetService.el")
-;;;
-(defun b:mrm:manifest/activate (<fileName)
-  " #+begin_org
-** Based on the specified profile setup Gnus variables.
-** Incomplete Aspects:
-*** Provide an argument and read if not provided.
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mrm:manifest/filesList-activate"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:mrm:manifest/filesList-activate>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:mrm:manifest/filesList-activate (
+;;;#+END:
+                                          )
+   " #+begin_org
+** DocStr: Based on *b:mrm:manifest:filesList* setup Gnus variables.
+#+end_org "
+   (b:func$entry)
+   (loop-for-each each b:mrm:manifest:filesList
+     (b:mrm:manifest/activate each)
+     ))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:manifest/filesList-activate)
+#+END_SRC
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mrm:manifest/activate"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:mrm:manifest/activate>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:mrm:manifest/activate (
+;;;#+END:
+                                <fileName)
+   " #+begin_org
+** DocStr: Based on the specified =<fileName= profile setup Gnus variables.
+Interactively prompt when needed.
 #+end_org "
   (interactive (list (read-file-name "Gnus Profile File: ")))
-  (blee:ann|this-func (compile-time-function-name))
+  (b:func$entry)
   (load-file <fileName)
   (b:mrm:resource|map-to-mua))
 
-
-;;; (call-interactively 'b:gnus:manifest/deactivate)
-;;; (b:gnus:manifest/deactivate "/bxo/iso/piu_mbFullUsage/profiles/gnus/com.gmail@mohsen.byname/gnus-mailService.el")
-;;;
-(defun b:mrm:manifest/deactivate (<fileName)
-  " #+begin_org
-** Based on the specified profile setup Gnus variables.
-** Incomplete Aspects:
-*** Provide an argument and read if not provided.
-#+end_org "
-  (interactive (list (read-file-name "Gnus Profile File: ")))
-  (blee:ann|this-func (compile-time-function-name))
-  (message "NOTYET"))
-
-
 (orgCmntBegin "
-* /Concept:/ <<Abstract To Concrete MUA Mapping>>
-** Based on the complete abstract specification, we choose appropriate MUA
-** And then configure that MUA.
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:manifest/activate "./profiles/gnus/io.gmane.news/gnus-usenetService.el")
+#+END_SRC
 " orgCmntEnd)
 
-(string= "gnus" (plist-get b:mrm::map-to-muas 'gnus))
-
-;;;; DBLOCK_BEGIN
 (orgCmntBegin "
-* cl-defun <<b:mrm:resource|map-to-mua>>  [[start-stop debugger menu]]
+** Interactive Usage:
+#+BEGIN_SRC emacs-lisp
+(call-interactively 'b:mrm:manifest/activate)
+#+END_SRC
 " orgCmntEnd)
-(cl-defun b:mrm:resource|map-to-mua (
-;;; DBLOCK_END
+
+
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Concept: <<Abstract To Concrete MUA Mapping>>" :extraInfo "MUA Configuration."
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Concept: <<Abstract To Concrete MUA Mapping>>_: |]]  MUA Configuration.  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
+(orgCmntBegin "
+Based on the complete abstract specification, we choose appropriate MUA
+And then configure that MUA.
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mrm:resource|map-to-mua"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:mrm:resource|map-to-mua>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:mrm:resource|map-to-mua (
+;;;#+END:
                                   )
-    " #+begin_org
+   " #+begin_org
 ** DocStr: Dispatches based on the value of map-to-mua.
 #+end_org "
-    (let* (
+   (b:func$entry)
+   (let* (
            ($map-to-mua (get 'b:mrm:resource:manifest 'map-to-mua))
            )
       (cond
@@ -107,22 +184,74 @@
        )))
 
 
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:resource|map-to-mua)
+#+END_SRC
 
-(defun imapGetPassword ()
-  "Gets the passwd for imaps. For example it can prompt the end-user."
-  "NOTYET"
-  )
+#+RESULTS:
+| nntp | news.gmane.io |
 
-(defun smtpGetPassword ()
-  "Gets the passwd for ssmtp. For example it can prompt the end-user."
-  "NOTYET"
-  )
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "imapGetPassword"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<imapGetPassword>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun imapGetPassword (
+;;;#+END:
+                        )
+   " #+begin_org
+** DocStr: Gets the passwd for imaps. For example it can prompt the end-user.
+#+end_org "
+   "NOTYET")
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(imapGetPassword)
+#+END_SRC
+
+#+RESULTS:
+: NOTYET
+
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "smtpGetPassword"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<smtpGetPassword>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun smtpGetPassword (
+;;;#+END:
+                        )
+   " #+begin_org
+** DocStr: Gets the passwd for ssmtp. For example it can prompt the end-user.
+#+end_org "
+   "NOTYET")
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(smtpGetPassword)
+#+END_SRC
+
+#+RESULTS:
+: NOTYET
+
+" orgCmntEnd)
 
 
 
+;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'mua-abstract)
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
 ;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
-
+;;;#+END:

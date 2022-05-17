@@ -15,10 +15,10 @@
 
 ;;;; DBLOCK_BEGIN
 (orgCmntBegin "
-* Libre-Halaal Software --- Part Of Blee ---  COMEEGA Format.
+* Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
 ** This is Libre-Halaal Software. © Libre-Halaal Foundation. Subject to AGPL.
 ** It is not part of Emacs. It is part of Blee.
-** Best read and edited  with Polymode COMEEGA (Colaborative Org-Mode Enhance Emacs Generalized Authorship)
+** Best read and edited  with Poly-COMEEGA (Polymode Colaborative Org-Mode Enhance Emacs Generalized Authorship)
 " orgCmntEnd)
 ;;; DBLOCK_END
 
