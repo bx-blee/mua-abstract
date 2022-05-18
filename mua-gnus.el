@@ -1,31 +1,29 @@
 ;;; mua-gnus.el --- Configure Gnus With Profiles  -*- lexical-binding: t; -*-
 
-
 (orgCmntBegin "
-* Blee Messging Resource: Model And Terminology For Emacs-MUAs
-** Emacs-MUAs lack formal model and terminology. This has resulted to chaos.
-** b:mrm provides a model and terminoly for use of MUAs and Gnus in particular.
-** Think of this as a Meta Emacs-MUA Configuration And Management package.
-* Mapping Of Key Abstractions Of Blee-Gnus Model Onto Emacs-Gnus
-** As Emacs-Gnus is a large and complex beast.
-** Part of that complexity is due to its lack of clear model and terminology.
-** This module creates a concise model and terminology on top of Emacs-Gnus.
-** We then use this model and terminology of Blee-Gnus to configure Emacs-Gnus.
-** We offer this Blee-Gnus Model to Emacs-Gnus developers with some encouragement.
+* Summary:
 " orgCmntEnd)
 
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
 (orgCmntBegin "
-* Libre-Halaal Software --- Part Of Blee ---  COMEEGA Format.
+* Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
 ** This is Libre-Halaal Software. © Libre-Halaal Foundation. Subject to AGPL.
 ** It is not part of Emacs. It is part of Blee.
-** Best read and edited  with Polymode COMEEGA (Colaborative Org-Mode Enhance Emacs Generalized Authorship)
+** Best read and edited  with Poly-COMEEGA (Polymode Colaborative Org-Mode Enhance Emacs Generalized Authorship)
 " orgCmntEnd)
-;;; DBLOCK_END
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/authors :authors ("./inserts/authors-mb.org")
 (orgCmntBegin "
 * Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
 " orgCmntEnd)
+;;;#+END:
+
+;;;#+BEGIN: b:elisp:file/orgTopControls :outLevel 1
+(orgCmntBegin "
+*  ~ORG-TOP-CONTROLS-COME-HERE~
+" orgCmntEnd)
+;;;#+END:
 
 
 (orgCmntBegin "
@@ -52,24 +50,36 @@ SCHEDULED: <2022-04-29 Fri>
 *** DONE Add from Variable Compose Mail Template For F12 c-c
 " orgCmntEnd)
 
-(orgCmntBegin "
-* Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
-" orgCmntEnd)
 
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "REQUIRES" :extraInfo "Imports"
 (orgCmntBegin "
-*      ================ Requires
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _REQUIRES_: |]]  Imports  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
+;;;#+END:
 
 (require 'gnus)
 (require 'gnus-srvr)
 (require 'loop)
 
-;;; (gnus-group-browse-foreign-server (quote (nntp "io.gmane.newsne.io")))
-;;; (setq smtpmail-debug-info t)
-;;; (gnus-server-offline-server "nntp:news.gmane.io")
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
 
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
 
-(defun b:gnus:mrm:resource|activate ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:mrm:resource|activate"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:gnus:mrm:resource|activate>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:gnus:mrm:resource|activate (
+;;;#+END:
+                                     )
   " #+begin_org
 ** Based on the specified profile setup Gnus variables.
 ** Incomplete Aspects:
@@ -89,9 +99,24 @@ SCHEDULED: <2022-04-29 Fri>
      (message (s-lex-format "Unknown sourceType=${$sourceType}"))))
     ))
 
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:gnus:mrm:resource|activate)
+#+END_SRC
+" orgCmntEnd)
+;;; (gnus-group-browse-foreign-server (quote (nntp "io.gmane.newsne.io")))
+;;; (setq smtpmail-debug-info t)
+;;; (gnus-server-offline-server "nntp:news.gmane.io")
 
-(defun b:gnus:inMail|configure ()
-  " #+begin_org
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:inMail|configure"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:gnus:inMail|configure>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:gnus:inMail|configure (
+;;;#+END:
+                                )
+" #+begin_org
 ** Based on the specified profile setup Gnus variables.
 *** TODO The oppoist of configure is delist --- NOTYET.
 #+end_org "
@@ -109,9 +134,21 @@ SCHEDULED: <2022-04-29 Fri>
 		          (nnimap-stream ssl))
                  t)))
 
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:gnus:inMail|configure)
+#+END_SRC
+" orgCmntEnd)
 
-(defun b:gnus:outMail|configure ()
-  " #+begin_org
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:outMail|configure"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:gnus:outMail|configure>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:gnus:outMail|configure (
+;;;#+END:
+                                 )
+" #+begin_org
 ** Based on the specified profile setup Gnus variables.
 *** TODO The oppoist of configure is delist --- NOTYET.
 #+end_org "
@@ -147,12 +184,20 @@ SCHEDULED: <2022-04-29 Fri>
                     ))
                  t)))
 
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:gnus:outMail|configure)
+#+END_SRC
+" orgCmntEnd)
 
-;;; (load-file "/bxo/iso/piu_mbFullUsage/profiles/gnus/io.gmane.news/gnus-usenetService.el")
-;;; (b:gnus:usenet|configure)
-;;;  (gnus-server-add-server "nntp" "news.gmane.io")
-;;;
-(defun b:gnus:usenet|configure ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:usenet|configure"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:gnus:usenet|configure>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:gnus:usenet|configure (
+;;;#+END:
+                                )
   " #+begin_org
 ** Based on the specified profile setup Gnus variables.
 *** TODO The oppoist of configure is delist --- NOTYET.
@@ -169,8 +214,23 @@ SCHEDULED: <2022-04-29 Fri>
     ;;(gnus-server-offline-server (s-lex-format "nntp:${$nntp-address}"))
     ))
 
+;;; (load-file "/bxo/iso/piu_mbFullUsage/profiles/gnus/io.gmane.news/gnus-usenetService.el")
+;;; (b:gnus:usenet|configure)
+;;;  (gnus-server-add-server "nntp" "news.gmane.io")
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:gnus:usenet|configure)
+#+END_SRC
+" orgCmntEnd)
 
-(defun b:gnus:vault/credentials-add ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:vault/credentials-add"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:gnus:vault/credentials-add>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:gnus:vault/credentials-add (
+;;;#+END:
+                                     )
   " #+begin_org
 ** Based on the specified profile setup Gnus variables.
 #+end_org "
@@ -184,10 +244,22 @@ SCHEDULED: <2022-04-29 Fri>
     ;;
     "b:gnus:vault/credentials-add NOTYET"))
 
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:gnus:vault/credentials-add)
+#+END_SRC
+" orgCmntEnd)
 
+;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'mua-gnus)
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
 ;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
-
+;;;#+END:

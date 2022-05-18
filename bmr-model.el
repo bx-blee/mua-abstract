@@ -1,7 +1,7 @@
-;;; bmr-model.el --- Blee Messging Resource Model (b:mrm)  --*- lexical-binding: t; -*-
+;;; bmr-model.el --- Blee Messging Resource Model (b:mrm)  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Blee Messging Resource: Model And Terminology For Emacs-MUAs
+* Summary: Blee Messging Resource Model (b:mrm) And Terminology For Emacs-MUAs
 ** Emacs-MUAs lack formal model and terminology. This has resulted to chaos.
 ** b:mrm provides a model and terminoly for use of MUAs and Gnus in particular.
 ** Think of this as a Meta Emacs-MUA Configuration And Management package.
@@ -13,18 +13,26 @@
 ** We offer this Blee-Gnus Model to Emacs-Gnus developers with some encouragement.
 " orgCmntEnd)
 
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
 (orgCmntBegin "
 * Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
 ** This is Libre-Halaal Software. © Libre-Halaal Foundation. Subject to AGPL.
 ** It is not part of Emacs. It is part of Blee.
 ** Best read and edited  with Poly-COMEEGA (Polymode Colaborative Org-Mode Enhance Emacs Generalized Authorship)
 " orgCmntEnd)
-;;; DBLOCK_END
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/authors :authors ("./inserts/authors-mb.org")
 (orgCmntBegin "
 * Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
 " orgCmntEnd)
+;;;#+END:
+
+;;;#+BEGIN: b:elisp:file/orgTopControls :outLevel 1
+(orgCmntBegin "
+*  ~ORG-TOP-CONTROLS-COME-HERE~
+" orgCmntEnd)
+;;;#+END:
 
 (orgCmntBegin "
 * /Plugins:/ MUAs --- Providers Modules --- Method Modules --- Manifest Files
@@ -38,19 +46,20 @@
 * Relevant Panels:
 ** [[file:/bisos/panels/blee-core/mail/model/_nodeBase_/fullUsagePanel-en.org]]
 ** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
+* Planned Improvements:
 " orgCmntEnd)
 
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "REQUIRES" :extraInfo "Imports"
 (orgCmntBegin "
-*   ~Requires~
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _REQUIRES_: |]]  Imports  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
+;;;#+END:
 
-(require 'gnus)
-(require 'gnus-srvr)
-(require 'loop)
-
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
-*   ~Implementation Declarations~
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
+;;;#+END:
 
 (defvar b:mrm:resource:manifest "SymbolPlistType"
   " #+begin_org
@@ -70,43 +79,25 @@
 #+end_org "
   )
 
-;;;  (b:remprop-all 'b:mrm:resource:manifest)
-
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "/Concept:/ <<b:mrm Messaging Resources>>" :extraInfo "Abstractions"
 (orgCmntBegin "
-* defun <<b:remprop-all>>  [[start-stop debugger menu]]
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| */Concept:/ <<b:mrm Messaging Resources>>:* |]]  Abstractions  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(defun b:remprop-all (
-;;; DBLOCK_END
-                      <symbol
-                      )
-    " #+begin_org
-** DocStr: Walk through ~<symbol~'s property list and remove them all. Returns nil.
-#+end_org "
-      (let*  (
-              ($plist (symbol-plist <symbol))
-              )
-        (dolist ($each $plist)
-          (cl-remprop <symbol $each)
-          (pop $plist) ;;; ignoring the value
-          )))
+;;;#+END:
 
 (orgCmntBegin "
-* /Concept:/ <<b:mrm Messaging Resources>>
 **  A =b:mrm Messaging Resource= consists of one of or both of:
 **  - A Retrievables Messaging Resource  (Credentialed or Open)
 **  - A Injection Messaging Resource  (Credentialed or Open)
 ** [[b:mrm:resource|define]] function is used to define a [[b:mrm:resource]]
 " orgCmntEnd)
 
-;;; (b:mrm:resource|define)
-
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:resource|define"
 (orgCmntBegin "
-* cl-defun <<b:mrm:resource|define>>  [[start-stop debugger menu]]
+* [[elisp:(show-all)][(>]]  =cl-defun= <<b:mrm:resource|define>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 (cl-defun b:mrm:resource|define (
-;;; DBLOCK_END
+;;;#+END:
                                   &key
                                   (name "")
                                   (resource-type nil)
@@ -148,6 +139,13 @@
   )
 
 (orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:resource|define)
+#+END_SRC
+" orgCmntEnd)
+
+(orgCmntBegin "
 * defconst <<b:mrm::map-to-muas>>
 " orgCmntEnd)
 (defconst
@@ -159,7 +157,6 @@
   ** Enumeration of currently supported MUAs. More to come.
 #+end_org "
 )
-
 
 (orgCmntBegin "
 * defconst <<b:mrm:resource::types>>
@@ -178,7 +175,6 @@
 #+end_org "
 )
 
-
 (orgCmntBegin "
 * defconst <<b:mrm::vaultInterfaces>>
 " orgCmntEnd)
@@ -187,6 +183,7 @@
   `(
     secretService "secretService"
     authinfo "authinfo"
+    externalAuthinfo "externalAuthinfo"
     authinfo.pgp "authinfo.pgp"
     none "none"
     )
@@ -250,18 +247,18 @@
 ** For Mail, [[b:mrm:retrievablesResource:mail|define]] can be used.
 " orgCmntEnd)
 
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName ":mrm:retrievablesResource:mail|define"
 (orgCmntBegin "
-* cl-defun <<b:mrm:retrievablesResource:mail|define>>  [[start-stop debugger menu]]
+* [[elisp:(show-all)][(>]]  =cl-defun= <<:mrm:retrievablesResource:mail|define>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(cl-defun b:mrm:retrievablesResource:mail|define (
-;;; DBLOCK_END
-                                                &key
-                                                (user-acct nil)
-                                                (acct-passwd nil)
-                                                (retrievablesResource-method nil)
-                                                (retrievablesResource-provider nil)
-                                                )
+(cl-defun :mrm:retrievablesResource:mail|define (
+;;;#+END:
+                                                 &key
+                                                 (user-acct nil)
+                                                 (acct-passwd nil)
+                                                 (retrievablesResource-method nil)
+                                                 (retrievablesResource-provider nil)
+                                                 )
   " #+begin_org
 ** DocStr: Define a b:mrm:resource based on the specified keyword args.
 #+end_org "
@@ -279,18 +276,23 @@
     (funcall retrievablesResource-provider))
   )
 
-
-
-;;;; DBLOCK_BEGIN
 (orgCmntBegin "
-* cl-defun <<b:mrm:retrievablesResource:usenet|define>>  [[start-stop debugger menu]]
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(:mrm:retrievablesResource:mail|define)
+#+END_SRC
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:retrievablesResource:usenet|define"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =cl-defun= <<b:mrm:retrievablesResource:usenet|define>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 (cl-defun b:mrm:retrievablesResource:usenet|define (
-;;; DBLOCK_END
-                                                &key
-                                                (retrievablesResource-method nil)
-                                                (retrievablesResource-provider nil)
-                                                )
+;;;#+END:
+                                                    &key
+                                                    (retrievablesResource-method nil)
+                                                    (retrievablesResource-provider nil)
+                                                    )
   " #+begin_org
 ** DocStr: Define a b:mrm:resource based on the specified keyword args.
 #+end_org "
@@ -304,6 +306,12 @@
     (funcall retrievablesResource-provider))
   )
 
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:retrievablesResource:usenet|define)
+#+END_SRC
+" orgCmntEnd)
 
 (orgCmntBegin "
 * /Concept:/ <<b:mrm Injection Specifications>>
@@ -311,12 +319,12 @@
 ** For Mail, [[b:mrm:injectionResource:mail|define]] can be used.
 " orgCmntEnd)
 
-;;;; DBLOCK_BEGIN
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:injectionResource:mail|define"
 (orgCmntBegin "
-* cl-defun <<b:mrm:injectionResource:mail|define>>  [[start-stop debugger menu]]
+* [[elisp:(show-all)][(>]]  =cl-defun= <<b:mrm:injectionResource:mail|define>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 (cl-defun b:mrm:injectionResource:mail|define (
-;;; DBLOCK_END
+;;;#+END:
                                                 &key
                                                 (user-acct nil)
                                                 (acct-passwd nil)
@@ -339,6 +347,13 @@
   (when injectionResource-provider
     (funcall injectionResource-provider))
   )
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:injectionResource:mail|define)
+#+END_SRC
+" orgCmntEnd)
 
 
 (orgCmntBegin "
@@ -377,9 +392,15 @@
 #+END_SRC
 " orgCmntEnd)
 
+;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'bmr-model)
+;;;#+END:
 
+;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
 ;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
-
+;;;#+END:
