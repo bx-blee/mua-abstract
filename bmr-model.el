@@ -247,11 +247,11 @@
 ** For Mail, [[b:mrm:retrievablesResource:mail|define]] can be used.
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName ":mrm:retrievablesResource:mail|define"
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:retrievablesResource:mail|define"
 (orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =cl-defun= <<:mrm:retrievablesResource:mail|define>> [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  =cl-defun= <<b:mrm:retrievablesResource:mail|define>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(cl-defun :mrm:retrievablesResource:mail|define (
+(cl-defun b:mrm:retrievablesResource:mail|define (
 ;;;#+END:
                                                  &key
                                                  (user-acct nil)

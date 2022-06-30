@@ -140,7 +140,7 @@ Interactively prompt when needed.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mrm:manifest/activate "./profiles/gnus/io.gmane.news/gnus-usenetService.el")
+(b:mrm:manifest/activate \"./profiles/gnus/io.gmane.news/gnus-usenetService.el\")
 #+END_SRC
 " orgCmntEnd)
 

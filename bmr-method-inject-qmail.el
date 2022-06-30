@@ -55,6 +55,29 @@ SCHEDULED: <2022-05-05 Thu>
 " orgCmntEnd)
 ;;;#+END:
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mr:method:inject|qmail" :advice ()
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:mr:method:inject|qmail>>  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:mr:method:inject|qmail (
+;;;#+END:
+                        )
+   " #+begin_org
+** DocStr: Based on what is in the profile and which emacs-ua (eg gnus) has been specified,
+dispatch to ./mua-gnus.el.
+#+end_org "
+   (let* (
+          (somePar "somePar")
+         )
+        somePar))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mr:method:inject|qmail)
+#+END_SRC
+" orgCmntEnd)
+
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'bmr-method-inject-qmail)
 ;;;#+END:
