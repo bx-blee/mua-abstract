@@ -4,7 +4,7 @@ Emacs-MUAs lack formal model and terminology. This has resulted to chaos.
 b:mrm provides a model and terminoly for use of MUAs and Gnus in particular.
 Think of this as a Meta Emacs-MUA Configuration And Management package.
 * Mapping Of Key Abstractions Of Blee-Gnus Model Onto Emacs-Gnus
-As Emacs-Gnus is a large and complex beast.
+Emacs-Gnus is a large and complex beast.
 Part of that complexity is due to its lack of clear model and terminology.
 This module creates a concise model and terminology on top of Emacs-Gnus.
 We then use this model and terminology of Blee-Gnus to configure Emacs-Gnus.
