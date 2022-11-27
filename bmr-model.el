@@ -209,7 +209,7 @@
 * /Concept:/ <<b:mrm Messaging-Resource Methods>>
 **  =b:mrm Messaging-Resource Methods= are the machinaries through which [[b:mrm Messaging-Resource Providers]] are accessed.
 **  List of available Retrievables Methods are in:  [[b:mrm:retrievables::methods]].
-**  List of available Injection Methods are in: [[b:mrm:injection::methods]].
+**  List of available Sending (submission/injection) Methods are in: [[b:mrm:sending::methods]].
 " orgCmntEnd)
 
 
@@ -219,8 +219,9 @@
 (defconst
   b:mrm:retrievables::methods
       `(
-        :nnimap "nnimap"
-        :nntp "nntp"
+        imap "imap"
+        maildir "maildir"
+        nntp "nntp"
         )
   " #+begin_org
   ** Enumeration of retrievables methods.
@@ -228,15 +229,15 @@
   )
 
 (defconst
-  b:mrm:injection::methods
+ b:mrm:sending::methods
   `(
-    :smtpmail "smtpmail"  ; synchronous elisp lib
-    :sendmail "sendmail"  ; common unix interface
-    :qmail-inject "qmail-inject"
-    :nntp "nntp"
+    smtpmail "smtpmail"  ; synchronous elisp lib
+    sendmail "sendmail"  ; common unix interface
+    qmail-inject "qmail-inject"
+    nntp "nntp"
     )
   " #+begin_org
-  ** Enumeration of retrievables methods.
+  ** Enumeration of sending methods. A sending method is either a submission method or an injection method.
 #+end_org "
   )
 
@@ -257,6 +258,7 @@
                                                  (user-acct nil)
                                                  (acct-passwd nil)
                                                  (retrievablesResource-method nil)
+                                                 (retrievablesResource-maildirPath nil)
                                                  (retrievablesResource-provider nil)
                                                  )
   " #+begin_org
@@ -272,6 +274,8 @@
     (put 'b:mrm:inMail:manifest 'acct-passwd acct-passwd))
   (when retrievablesResource-method
     (put 'b:mrm:inMail:manifest 'retrievablesResource-method retrievablesResource-method))
+  (when retrievablesResource-maildirPath
+    (put 'b:mrm:inMail:manifest 'retrievablesResource-maildirPath retrievablesResource-maildirPath))
   (when retrievablesResource-provider
     (funcall retrievablesResource-provider))
   )

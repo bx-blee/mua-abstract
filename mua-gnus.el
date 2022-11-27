@@ -41,7 +41,7 @@ abstract mail service descriptions.
                 (nnir-search-engine imap)
                 (nnmail-expiry-target \"nnimap+work:[Gmail]/Trash\")
                 (nnmail-expiry-wait 'immediate))))
-*** TODO Add mbox format ans Gnus source --- test with large exisiting
+*** TODO Add mbox format and Gnus source --- test with large exisiting
 *** TODO convert setq plists in manifest files to functions.
 *** TODO Set gmail as a known resource.
 *** TODO convert to a package.
@@ -118,21 +118,49 @@ SCHEDULED: <2022-04-29 Fri>
                                 )
 " #+begin_org
 ** Based on the specified profile setup Gnus variables.
-*** TODO The oppoist of configure is delist --- NOTYET.
+*** TODO The opposit of configure is delist --- NOTYET.
 #+end_org "
   (blee:ann|this-func (compile-time-function-name))
   (let*  (
           ($mailService-name (get 'b:mrm:resource:manifest 'name))
-          ($imap-address (get 'b:mrm:inMail:manifest 'imap-address))
-          ($imap-port (get 'b:mrm:inMail:manifest 'imap-port))
           )
-    ;;  Optional third arg t=append, puts $mailService-name at the end of the list.
-    (add-to-list 'gnus-secondary-select-methods
-		 `(nnimap ,$mailService-name
-		          (nnimap-address ,$imap-address)
-		          (nnimap-server-port ,$imap-port)
-		          (nnimap-stream ssl))
-                 t)))
+
+    (cond
+     ((string=
+       (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
+       (plist-get b:mrm:retrievables::methods 'imap))
+      (let* (
+             ($imap-address (get 'b:mrm:inMail:manifest 'imap-address))
+             ($imap-port (get 'b:mrm:inMail:manifest 'imap-port))
+             ($imap-stream (get 'b:mrm:inMail:manifest 'imap-stream))
+             )
+
+        ;;  Optional third arg t=append, puts $mailService-name at the end of the list.
+        (add-to-list 'gnus-secondary-select-methods
+		     `(nnimap
+                       ,$mailService-name
+		       (nnimap-address ,$imap-address)
+		       (nnimap-server-port ,$imap-port)
+		       (nnimap-stream ,$imap-stream))
+                     t)
+        ))
+     ((string=
+       (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
+       (plist-get b:mrm:retrievables::methods 'maildir))
+      (let* (
+             ($maildir-path (get 'b:mrm:inMail:manifest 'maildir-path))
+             )
+
+        ;;  Optional third arg t=append, puts $mailService-name at the end of the list.
+        (add-to-list 'gnus-secondary-select-methods
+		     `(nnmaildir
+                       ,$mailService-name
+		       (directory ,$maildir-path))
+                     t)
+        ))
+     (t
+      (error "Unknown retrievablesResource-method")))))
+
 
 (orgCmntBegin "
 ** Basic Usage:

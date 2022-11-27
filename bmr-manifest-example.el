@@ -22,7 +22,7 @@
    (b:mrm:injectionResource:mail|define
     :user-acct "acctName"
     :acct-passwd (smtpGetPassword)
-    :injectionResource-method (plist-get b:mrm:injection::methods 'smtpmail)
+    :injectionResource-method (plist-get b:mrm:sending::methods 'smtpmail)
     :injectionResource-provider 'b:mrm:injectionResource:provider|com-gmail
     ))
  :vault-interface (plist-get b:mrm::vaultInterfaces 'authinfo)

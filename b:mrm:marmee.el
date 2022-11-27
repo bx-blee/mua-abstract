@@ -80,7 +80,6 @@ walks through them
         (setq $childrenSvcInstance (f-directories $eachSvcProv))
         (loop-for-each $eachSvcInstance $childrenSvcInstance
           (setq $svcInstanceBase (f-join $aasBaseDir $eachSvcProv $eachSvcInstance))
-          (message $svcInstanceBase)
           (setq $bpoId (bisos:bpo|givenPathObtainBpoId $svcInstanceBase))
           (setq $bpoBaseDir (bisos:bpo|baseDirObtain $bpoId))
           (setq $envRelPath
@@ -111,6 +110,7 @@ walks through them
           ($bpoBaseDir (bisos:bpo|baseDirObtain <bpoId))
           ($inMailFpBase)
           ($inMail:userName)
+          ($inMail:svcProvider)
           )
      (setq $inMailFpBase
            (f-join $bpoBaseDir <envRelPath "control/inMail/fp"))
@@ -119,9 +119,18 @@ walks through them
            (bisos:aas:marmee:manage|fpParamGetWithName
             $inMailFpBase "AasInMail_FPs" "userName"))
 
+     (setq $inMail:svcProvider
+           (bisos:aas:marmee:manage|fpParamGetWithName
+            $inMailFpBase "AasInMail_FPs" "svcProvider"))
+
+     (setq $maildirPath
+           (bisos:aas:marmee:offlineimap|maildirPath
+            <bpoId <envRelPath))
+
      (b:mrm:marmee:aas:resource|define
       :mailAcctName $inMail:userName
-      :svcProvider  "gmail"
+      :maildirPath $maildirPath
+      :svcProvider $inMail:svcProvider
       )
      ))
 
@@ -147,6 +156,7 @@ walks through them
                                             &key
                                             (mailAcctName "")
                                             (inMailAcctName "")
+                                            (maildirPath "")
                                             (outMailAcctName "")
                                             (svcProvider "")
                                             )
@@ -158,8 +168,9 @@ walks through them
   (when (string= svcProvider "gmail")
     (b:mrm:aas:resource:gnus:gmail|define
      :mailAcctName mailAcctName
-     :mailAcctName inMailAcctName
-     :mailAcctName outMailAcctName
+     :inMailAcctName inMailAcctName
+     :maildirPath maildirPath
+     :outMailAcctName outMailAcctName
      ))
   )
 
@@ -181,40 +192,52 @@ walks through them
 " orgCmntEnd)
 (cl-defun b:mrm:aas:resource:gnus:gmail|define (
 ;;;#+END:
-                                            &key
-                                            (mailAcctName "")
-                                            (inMailAcctName "")
-                                            (outMailAcctName "")
-                                            (retrievablesMethod 'nnmaildir)
-                                            (sendingMethod 'qmail-inject)
-                                            )
+                                                &key
+                                                (mailAcctName "")
+                                                (inMailAcctName "")
+                                                (outMailAcctName "")
+                                                (maildirPath "")
+                                                (retrievablesMethod
+                                                 (plist-get b:mrm:retrievables::methods 'maildir))
+                                                (sendingMethod
+                                                 (plist-get b:mrm:sending::methods 'qmail-inject))
+                                                )
   " #+begin_org
 ** DocStr:
 #+end_org "
   (b:func$entry)
-  (b:mrm:resource|define
-   :name "com.gmail@acctName"
-   :resource-type (plist-get b:mrm:resource::types 'mailService)
-   :map-to-mua (plist-get b:mrm::map-to-muas 'gnus)
-   :retrievablesResource-spec
-   (lambda ()
-     (b:mrm:retrievablesResource:mail|define
-      :user-acct "acctName"
-      :acct-passwd (imapGetPassword)
-      :retrievablesResource-method (plist-get b:mrm:retrievables::methods 'nnimap)
-      :retrievablesResource-provider 'b:mrm:retrievablesResource:provider|com-gmail
-      ))
-   :injectionResource-spec
-   (lambda ()
-     (b:mrm:injectionResource:mail|define
-      :user-acct "acctName"
-      :acct-passwd (smtpGetPassword)
-      :injectionResource-method (plist-get b:mrm:injection::methods 'smtpmail)
-      :injectionResource-provider 'b:mrm:injectionResource:provider|com-gmail
-      ))
-   :vault-interface (plist-get b:mrm::vaultInterfaces 'authinfo)
-   )
-  )
+  (let* (
+         ($inMailAcctName inMailAcctName)
+         ($outMailAcctName outMailAcctName)
+         )
+
+    (unless $inMailAcctName (setq $inMailAcctName mailAcctName))
+    (unless $outMailAcctName (setq $outMailAcctName mailAcctName))
+
+    (b:mrm:resource|define
+     :name (s-lex-format "com.gmail@${mailAcctName}")
+     :resource-type (plist-get b:mrm:resource::types 'mailService)
+     :map-to-mua (plist-get b:mrm::map-to-muas 'gnus)
+     :retrievablesResource-spec
+     (lambda ()
+       (b:mrm:retrievablesResource:mail|define
+        :user-acct (s-lex-format "${$inMailAcctName}")
+        :acct-passwd (imapGetPassword)
+        :retrievablesResource-method retrievablesMethod
+        :maildirPath maildirPath
+        :retrievablesResource-provider 'b:mrm:retrievablesResource:provider|com-gmail
+        ))
+     :injectionResource-spec
+     (lambda ()
+       (b:mrm:injectionResource:mail|define
+        :user-acct (s-lex-format "${$outMailAcctName}")
+        :acct-passwd (smtpGetPassword)
+        :injectionResource-method sendingMethod
+        :injectionResource-provider 'b:mrm:injectionResource:provider|com-gmail
+        ))
+     :vault-interface (plist-get b:mrm::vaultInterfaces 'authinfo)
+     )
+    ))
 
 (orgCmntBegin "
 ** Basic Usage:
