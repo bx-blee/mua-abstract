@@ -15,7 +15,7 @@
     :user-acct "acctName"
     :acct-passwd (imapGetPassword)
     :retrievablesResource-method (plist-get b:mrm:retrievables::methods 'nnimap)
-    :retrievablesResource-provider 'b:mrm:retrievablesResource:provider|gmail
+    :retrievablesResource-provider 'b:mrm:retrievablesResource:provider|com-gmail
     ))
  :injectionResource-spec
  (lambda ()
@@ -23,7 +23,7 @@
     :user-acct "acctName"
     :acct-passwd (smtpGetPassword)
     :injectionResource-method (plist-get b:mrm:injection::methods 'smtpmail)
-    :injectionResource-provider 'b:mrm:injectionResource:provider|gmail
+    :injectionResource-provider 'b:mrm:injectionResource:provider|com-gmail
     ))
  :vault-interface (plist-get b:mrm::vaultInterfaces 'authinfo)
  )
