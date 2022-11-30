@@ -59,14 +59,18 @@ Specifies imap and submission protocol parameters of Gmail.
 ;;;#+END:
                                                       )
   " #+begin_org
-** DocSrc: For each named arument, take appropriate acction and set the corresponding plist.
+** DocSrc: This function is typically called from b:mrm:resource|define with
 #+end_org "
 
+
   (put 'b:mrm:inMail:manifest  'retrievables-resource "gmail")
-  (put 'b:mrm:inMail:manifest  'retrieval-method  "imap")
-  (put 'b:mrm:inMail:manifest  'imap-address "imap.gmail.com")
-  (put 'b:mrm:inMail:manifest  'imap-port "imaps")
-  (put 'b:mrm:inMail:manifest  'imap-stream "ssl")
+  (when (string=
+         (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
+         (plist-get b:mrm:retrievables::methods 'imap))
+    (put 'b:mrm:inMail:manifest  'imap-address "imap.gmail.com")
+    (put 'b:mrm:inMail:manifest  'imap-port "imaps")
+    (put 'b:mrm:inMail:manifest  'imap-stream "ssl")
+    )
   )
 
 (orgCmntBegin "

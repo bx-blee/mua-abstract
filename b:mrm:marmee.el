@@ -41,6 +41,7 @@ walks through them
 ;;;#+END:
 
 (require 'f)
+(require 'bisos)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "

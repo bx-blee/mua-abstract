@@ -258,7 +258,7 @@
                                                  (user-acct nil)
                                                  (acct-passwd nil)
                                                  (retrievablesResource-method nil)
-                                                 (retrievablesResource-maildirPath nil)
+                                                 (maildirPath nil)
                                                  (retrievablesResource-provider nil)
                                                  )
   " #+begin_org
@@ -274,8 +274,8 @@
     (put 'b:mrm:inMail:manifest 'acct-passwd acct-passwd))
   (when retrievablesResource-method
     (put 'b:mrm:inMail:manifest 'retrievablesResource-method retrievablesResource-method))
-  (when retrievablesResource-maildirPath
-    (put 'b:mrm:inMail:manifest 'retrievablesResource-maildirPath retrievablesResource-maildirPath))
+  (when maildirPath
+    (put 'b:mrm:inMail:manifest 'maildir-path maildirPath))
   (when retrievablesResource-provider
     (funcall retrievablesResource-provider))
   )

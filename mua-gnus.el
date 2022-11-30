@@ -67,6 +67,8 @@ SCHEDULED: <2022-04-29 Fri>
 " orgCmntEnd)
 ;;;#+END:
 
+(defvar b:gnus:offlineServers '())
+
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
@@ -178,9 +180,11 @@ SCHEDULED: <2022-04-29 Fri>
                                  )
 " #+begin_org
 ** Based on the specified profile setup Gnus variables.
-*** TODO The oppoist of configure is delist --- NOTYET.
 #+end_org "
   (blee:ann|this-func (compile-time-function-name))
+
+  (b:gnus:outMail:inject|setup-qmail)
+
   (let*  (
           ($mailService-name (get 'b:mrm:resource:manifest 'name))
           ($submit-from-addr (get 'b:mrm:outMail:manifest 'submit-from-addr))
@@ -198,6 +202,18 @@ SCHEDULED: <2022-04-29 Fri>
 
     ;;  Optional third arg t=append, puts $mailService-name at the end of the list.
     ;;  Not beginning of the gnus-posting-styles list
+    ;;  TODO NOTYET Revisit, commented lines below
+
+;; (add-to-list 'gnus-posting-styles
+;; 	     '(".*gmail.com@mohsen.byname:.*"
+;; 	       (from "mohsen.byname@gmail.com")
+;; 	       (bcc "mohsen.byname@gmail.com")
+;; 	       ("Return-Path" "mohsen.byname@gmail.com")
+;; 	       ("X-Envelope" "mohsen.byname@gmail.com")
+;; 	       ("X-Message-SMTP-Method" "qmail")
+;; 	       )
+;; 	     t)
+
     (add-to-list 'gnus-posting-styles
                  (first
 	          `(
@@ -219,6 +235,40 @@ SCHEDULED: <2022-04-29 Fri>
 #+END_SRC
 " orgCmntEnd)
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:outMail:inject|setup-qmail"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:gnus:outMail:inject|setup-qmail>>   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:gnus:outMail:inject|setup-qmail (
+;;;#+END:
+                                          )
+" #+begin_org
+** Configure Guns's qmail-inject interface.
+#+end_org "
+
+;;(setq message-send-mail-function 'message-send-mail-with-qmail)
+  (setq message-qmail-inject-program "env")
+
+  ;; Envelop Setting
+  ;; QMAILINJECT=i -- lets qmail-inject write the message-id
+  ;; Envelop addr writen by -f
+  (setq message-qmail-inject-args
+	(list
+	 "-"
+	 "QMAILINJECT=i"  ;; Delete any incoming Message-ID field.
+	 "qmail-inject"
+	 )
+	)
+  )
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:gnus:outMail:inject|setup-qmail)
+#+END_SRC
+" orgCmntEnd)
+
+
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:usenet|configure"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  =defun= <<b:gnus:usenet|configure>> [[elisp:(org-shifttab)][<)]] E|
@@ -228,23 +278,44 @@ SCHEDULED: <2022-04-29 Fri>
                                 )
   " #+begin_org
 ** Based on the specified profile setup Gnus variables.
-*** TODO The oppoist of configure is delist --- NOTYET.
+*** TODO The opposit of configure is delist --- NOTYET.
 #+end_org "
   (blee:ann|this-func (compile-time-function-name))
   (let*  (
           ($source:name (get 'b:mrm:resource:manifest 'name))
           ($nntp-address (get 'b:mrm:usenet:manifest 'nntp-address))
           )
+
     (setq gnus-select-method `(nntp ,$nntp-address))
 
-    ;; Initially we may want the service to be offline
-    ;;(gnus-server-add-server "nntp" $nntp-address)
-    ;;(gnus-server-offline-server (s-lex-format "nntp:${$nntp-address}"))
+    (add-to-list 'b:gnus:offlineServers
+                 (s-lex-format "nntp:${$nntp-address}"))
+
+    (add-hook 'gnus-started-hook
+              'b:gnus:offlineServers|hook)
     ))
 
-;;; (load-file "/bxo/iso/piu_mbFullUsage/profiles/gnus/io.gmane.news/gnus-usenetService.el")
-;;; (b:gnus:usenet|configure)
-;;;  (gnus-server-add-server "nntp" "news.gmane.io")
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:gnus:offlineServers|hook"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:gnus:offlineServers|hook>>   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:gnus:offlineServers|hook (
+;;;#+END:
+                                   )
+  " #+begin_org
+** Meant to be run through =gnus-started-hook=. Set to offline each server in  b:gnus:offlineServers list.
+We go to the server-mode before walking through the list and exit it afterwards.
+#+end_org "
+  (blee:ann|this-func (compile-time-function-name))
+  (gnus-group-enter-server-mode)
+  (loop-for-each $eachServer b:gnus:offlineServers
+    ;; Initially we may want the service to be offline
+    ;;(gnus-server-add-server $eachServer)
+    (gnus-server-offline-server $eachServer))
+  (gnus-server-exit)
+  )
+
+;;;
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
