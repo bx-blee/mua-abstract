@@ -255,7 +255,7 @@ SCHEDULED: <2022-04-29 Fri>
   (setq message-qmail-inject-args
 	(list
 	 "-"
-	 "QMAILINJECT=i"  ;; Delete any incoming Message-ID field.
+	 ;; "QMAILINJECT=i"  ;; Delete any incoming Message-ID field.
 	 "qmail-inject"
 	 )
 	)
