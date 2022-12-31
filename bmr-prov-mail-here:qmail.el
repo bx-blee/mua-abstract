@@ -7,7 +7,11 @@ Specifies imap and submission protocol parameters of Gmail.
 
 ;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
 (orgCmntBegin "
-
+* *[[elisp:(org-cycle)][| Proclamations |]]* :: Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
+** This is Libre-Halaal Software. © Libre-Halaal Foundation. Subject to AGPL.
+** It is not part of Emacs. It is part of Blee.
+** Best read and edited  with Poly-COMEEGA (Polymode Colaborative Org-Mode Enhance Emacs Generalized Authorship)
+" orgCmntEnd)
 ;;;#+END:
 
 ;;;#+BEGIN: b:elisp:file/authors :authors ("./inserts/authors-mb.org")
@@ -61,13 +65,6 @@ Specifies imap and submission protocol parameters of Gmail.
 
 
   (put 'b:mrm:inMail:manifest  'retrievables-resource "qmail")
-  (when (string=
-         (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
-         (plist-get b:mrm:retrievables::methods 'qmail))
-    (put 'b:mrm:inMail:manifest  'imap-address "notyet-qmail)
-    (put 'b:mrm:inMail:manifest  'imap-port "notyet-qmail")
-    (put 'b:mrm:inMail:manifest  'imap-stream "notyet-qmail")
-    )
   )
 
 (orgCmntBegin "

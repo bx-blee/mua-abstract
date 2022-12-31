@@ -218,12 +218,15 @@ SCHEDULED: <2022-04-29 Fri>
                  (first
 	          `(
                     (,$mailService-name   ; Matches Gnus group called $mailService-name
+                     (from ,$user-acct)
+                     (bcc ,$user-acct)
+                     ("Return-Path" ,$user-acct)
+                     ("X-Envelope" ,$user-acct)
 		     (address ,$submit-from-addr)
 		     (name ,$submit-from-name)
                      (nnmail-expiry-target ,$expiry-target)
                      (nnmail-expiry-wait ,$expiry-wait)
-		     ("X-Message-SMTP-Method"
-                      ,(s-lex-format "smtp ${$smtp-address} 587 ${$user-acct}"))
+		     ("X-Message-SMTP-Method" ,(s-lex-format "qmail"))
                      )
                     ))
                  t)))
@@ -256,7 +259,11 @@ SCHEDULED: <2022-04-29 Fri>
 	(list
 	 "-"
 	 ;; "QMAILINJECT=i"  ;; Delete any incoming Message-ID field.
-	 "qmail-inject"
+	 ;; "/bisos/core/bpip/bin/qmail-inject-bisos.cs"
+         ;; "qmail-inject-bisos.cs"
+         "qmail-inject-bisos.cs"
+         "-i"
+         "monolithicSend"
 	 )
 	)
   )

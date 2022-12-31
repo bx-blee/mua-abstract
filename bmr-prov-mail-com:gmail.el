@@ -39,9 +39,6 @@ Specifies imap and submission protocol parameters of Gmail.
 " orgCmntEnd)
 ;;;#+END:
 
-(import 'bmr-prov-mail-com:gmail)
-(import 'bmr-prov-mail-here:qmail)
-
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|

@@ -42,6 +42,8 @@ walks through them
 
 (require 'f)
 (require 'bisos)
+(require 'bmr-prov-mail-com:gmail)
+(require 'bmr-prov-mail-here:qmail)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
@@ -110,11 +112,16 @@ walks through them
    (let* (
           ($bpoBaseDir (bisos:bpo|baseDirObtain <bpoId))
           ($inMailFpBase)
+          ($outMailFpBase)
           ($inMail:userName)
           ($inMail:svcProvider)
+          ($outMail:acctName)
           )
      (setq $inMailFpBase
            (f-join $bpoBaseDir <envRelPath "control/inMail/fp"))
+
+     (setq $outMailFpBase
+           (f-join $bpoBaseDir <envRelPath "control/outMail/fp"))
 
      (setq $inMail:userName
            (bisos:aas:marmee:manage|fpParamGetWithName
@@ -124,6 +131,10 @@ walks through them
            (bisos:aas:marmee:manage|fpParamGetWithName
             $inMailFpBase "AasInMail_FPs" "svcProvider"))
 
+     (setq $outMail:acctName
+           (bisos:aas:marmee:manage|fpParamGetWithName
+            $outMailFpBase "AasOutMail_FPs" "outMail_userName"))
+
      (setq $maildirPath
            (bisos:aas:marmee:offlineimap|maildirPath
             <bpoId <envRelPath))
@@ -132,18 +143,20 @@ walks through them
       :mailAcctName $inMail:userName
       :maildirPath $maildirPath
       :svcProvider $inMail:svcProvider
+      :outMailAcctName $outMail:acctName
       )
      ))
 
 
 (orgCmntBegin "
 ** Basic Usage:
+(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
 #+BEGIN_SRC emacs-lisp
 (b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/gmail/mohsen.byname))
 #+END_SRC
 
 #+RESULTS:
-: /bxo/iso/piu_mbFullUsage/aas/marmee/gmail/mohsen.byname/control/inMail/fp
+: /bxo/iso/piu_mbFullUsage/aas/marmee/gmail/mohsen.byname/conrol/inMail/fp
 
 " orgCmntEnd)
 
@@ -166,23 +179,33 @@ walks through them
 #+end_org "
   (b:func$entry)
   (message mailAcctName)
-  (when (string= svcProvider "gmail")
+  (cond
+   ((string= svcProvider "gmail")
     (b:mrm:aas:resource:gnus:gmail|define
      :mailAcctName mailAcctName
      :inMailAcctName inMailAcctName
      :maildirPath maildirPath
      :outMailAcctName outMailAcctName
      ))
-  )
+   ((string= svcProvider "qmail")
+    (b:mrm:aas:resource:gnus:qmail|define
+     :mailAcctName mailAcctName
+     :inMailAcctName inMailAcctName
+     :maildirPath maildirPath
+     :outMailAcctName outMailAcctName
+     ))
+   (t
+    (error (s-lex-format "Unknown ${svcProvider}"))
+    )))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/gmail/mohsen.byname))
+(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
 #+END_SRC
 
 #+RESULTS:
-: /bxo/iso/piu_mbFullUsage/aas/marmee/gmail/mohsen.byname/control/inMail/fp
+: b:gnus:vault/credentials-add NOTYET
 
 " orgCmntEnd)
 
@@ -243,11 +266,11 @@ walks through them
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/gmail/mohsen.byname))
+(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
 #+END_SRC
 
 #+RESULTS:
-: /bxo/iso/piu_mbFullUsage/aas/marmee/gmail/mohsen.byname/control/inMail/fp
+: b:gnus:vault/credentials-add NOTYET
 
 " orgCmntEnd)
 
@@ -275,14 +298,105 @@ walks through them
 	       t)
   )
 
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:aas:resource:gnus:qmail|define" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mrm:aas:resource:gnus:qmail|define>>   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mrm:aas:resource:gnus:qmail|define (
+;;;#+END:
+                                                &key
+                                                (mailAcctName "")
+                                                (inMailAcctName "")
+                                                (outMailAcctName "")
+                                                (maildirPath "")
+                                                (retrievablesMethod
+                                                 (plist-get b:mrm:retrievables::methods 'maildir))
+                                                (sendingMethod
+                                                 (plist-get b:mrm:sending::methods 'qmail-inject))
+                                                )
+  " #+begin_org
+** DocStr:
+#+end_org "
+  (b:func$entry)
+  (let* (
+         ($inMailAcctName inMailAcctName)
+         ($outMailAcctName outMailAcctName)
+         )
+
+    (unless $inMailAcctName (setq $inMailAcctName mailAcctName))
+    (unless $outMailAcctName (setq $outMailAcctName mailAcctName))
+
+    (b:mrm:resource|define
+     :name (s-lex-format "here.qmail@${mailAcctName}")
+     :resource-type (plist-get b:mrm:resource::types 'mailService)
+     :map-to-mua (plist-get b:mrm::map-to-muas 'gnus)
+     :retrievablesResource-spec
+     (lambda ()
+       (b:mrm:retrievablesResource:mail|define
+        :user-acct (s-lex-format "${$inMailAcctName}")
+        :acct-passwd (imapGetPassword)
+        :retrievablesResource-method retrievablesMethod
+        :maildirPath maildirPath
+        :retrievablesResource-provider 'b:mrm:retrievablesResource:provider|here-qmail
+        ))
+     :injectionResource-spec
+     (lambda ()
+       (b:mrm:injectionResource:mail|define
+        :user-acct (s-lex-format "${$outMailAcctName}")
+        :acct-passwd (smtpGetPassword)
+        :injectionResource-method sendingMethod
+        :injectionResource-provider 'b:mrm:injectionResource:provider|here-qmail
+        ))
+     :vault-interface (plist-get b:mrm::vaultInterfaces 'authinfo)
+     )
+    ))
+
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/gmail/mohsen.byname))
+(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
 #+END_SRC
 
 #+RESULTS:
-: /bxo/iso/piu_mbFullUsage/aas/marmee/gmail/mohsen.byname/control/inMail/fp
+: b:gnus:vault/credentials-add NOTYET
+
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:aas:resource:gnus:gmail|postingStyles" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mrm:aas:resource:gnus:gmail|postingStyles>>   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mrm:aas:resource:gnus:gmail|postingStyles (
+;;;#+END:
+                                            &key
+                                            (outMailAcctName "")
+                                            )
+  " #+begin_org
+** DocStr:
+#+end_org "
+  (b:func$entry)
+  (add-to-list 'gnus-posting-styles
+	       '((s-lex-format ".*gmail.com@${outMailAcctName}:.*")
+	         (from (s-lex-format "${outMailAcctName}mohsen.byname@gmail.com"))
+	         (bcc (s-lex-format "${outMailAcctName}@gmail.com"))
+	         ("Return-Path" (s-lex-format "${outMailAcctName}@gmail.com"))
+	         ("X-Envelope" (s-lex-format "${outMailAcctName}@gmail.com"))
+	         ("X-Message-SMTP-Method" "qmail")
+	         )
+	       t)
+  )
+
+
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
+#+END_SRC
+
+#+RESULTS:
+: b:gnus:vault/credentials-add NOTYET
 
 " orgCmntEnd)
 
