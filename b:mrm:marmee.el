@@ -263,6 +263,61 @@ walks through them
      )
     ))
 
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:aas:resource:gnus:gmail-limap|define" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mrm:aas:resource:gnus:gmail-limap|define>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mrm:aas:resource:gnus:gmail-limap|define (
+;;;#+END:
+                                                &key
+                                                (mailAcctName "")
+                                                (inMailAcctName "")
+                                                (outMailAcctName "")
+                                                (maildirPath "")
+                                                (retrievablesMethod
+                                                 (plist-get b:mrm:retrievables::methods 'limap))
+                                                (sendingMethod
+                                                 (plist-get b:mrm:sending::methods 'qmail-inject))
+                                                )
+  " #+begin_org
+** DocStr:
+#+end_org "
+  (b:func$entry)
+  (let* (
+         ($inMailAcctName inMailAcctName)
+         ($outMailAcctName outMailAcctName)
+         )
+
+    (unless $inMailAcctName (setq $inMailAcctName mailAcctName))
+    (unless $outMailAcctName (setq $outMailAcctName mailAcctName))
+
+    (b:mrm:resource|define
+     :name (s-lex-format "com.gmail@${mailAcctName}")
+     :resource-type (plist-get b:mrm:resource::types 'mailService)
+     :map-to-mua (plist-get b:mrm::map-to-muas 'gnus)
+     :retrievablesResource-spec
+     (lambda ()
+       (b:mrm:retrievablesResource:mail|define
+        :user-acct (s-lex-format "${$inMailAcctName}")
+        :acct-passwd (imapGetPassword)
+        :retrievablesResource-method retrievablesMethod
+        :maildirPath maildirPath   ;;; NOTYET, not needed for limap
+        :retrievablesResource-provider 'b:mrm:retrievablesResource:provider|com-gmail
+        ))
+     :injectionResource-spec
+     (lambda ()
+       (b:mrm:injectionResource:mail|define
+        :user-acct (s-lex-format "${$outMailAcctName}")
+        :acct-passwd (smtpGetPassword)
+        :injectionResource-method sendingMethod
+        :injectionResource-provider 'b:mrm:injectionResource:provider|com-gmail
+        ))
+     :vault-interface (plist-get b:mrm::vaultInterfaces 'authinfo)
+     )
+    ))
+
+
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
@@ -289,7 +344,7 @@ walks through them
   (b:func$entry)
   (add-to-list 'gnus-posting-styles
 	       '((s-lex-format ".*gmail.com@${outMailAcctName}:.*")
-	         (from (s-lex-format "${outMailAcctName}mohsen.byname@gmail.com"))
+	         (from (s-lex-format "${outMailAcctName}@gmail.com"))
 	         (bcc (s-lex-format "${outMailAcctName}@gmail.com"))
 	         ("Return-Path" (s-lex-format "${outMailAcctName}@gmail.com"))
 	         ("X-Envelope" (s-lex-format "${outMailAcctName}@gmail.com"))

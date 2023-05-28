@@ -220,6 +220,7 @@
   b:mrm:retrievables::methods
       `(
         imap "imap"
+        limap "limap"            ; Local IMAP, shell process
         maildir "maildir"
         nntp "nntp"
         )

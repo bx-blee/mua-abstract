@@ -34,7 +34,7 @@ abstract mail service descriptions.
 *** [[file:/bisos/panels/blee-core/mail/model/_nodeBase_/fullUsagePanel-en.org]]
 *** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
 ** Action Plan:
-*** TODO Add a b:gnus:manifest|init -- does (setq gnutls-log-lyevel 1) and more.
+*** TODO Add a b:gnus:manifest|init -- does (setq gnutls-log-level 1) and more.
 *** TODO Implement b:gnus:vault/credentials-add
 *** DONE Capture expiry and search engine
 (nnimap-stream ssl)
@@ -128,6 +128,28 @@ SCHEDULED: <2022-04-29 Fri>
           )
 
     (cond
+     ((string=
+       (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
+       (plist-get b:mrm:retrievables::methods 'limap))
+      ;;
+      ;;  NOTYET, May 28, 2023 Has not been tested.
+      ;;
+      (let* (
+             ($imap-stream (get 'b:mrm:inMail:manifest 'imap-stream))
+             ($maildir-path (get 'b:mrm:inMail:manifest 'maildir-path))
+             )
+
+        ;;  Optional third arg t=append, puts $mailService-name at the end of the list.
+        (add-to-list 'gnus-secondary-select-methods
+		     `(nnimap
+                       ,$mailService-name
+		       (nnimap-stream shell)
+                       (nnimap-shell-program
+                        ,(s-lex-format
+                         "/usr/lib/dovecot/imap -o mail_location='${$maildir-path}'"))
+                       )
+                     t)
+        ))
      ((string=
        (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
        (plist-get b:mrm:retrievables::methods 'imap))
