@@ -363,44 +363,41 @@ walks through them
 
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:aas:resource:gnus:gmail|postingStyles" :advice ()
-(orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mrm:aas:resource:gnus:gmail|postingStyles>>   [[elisp:(org-cycle)][| ]]
-" orgCmntEnd)
-(cl-defun b:mrm:aas:resource:gnus:gmail|postingStyles (
-;;;#+END:
-                                            &key
-                                            (outMailAcctName "")
-                                            )
-  " #+begin_org
-** DocStr:
-#+end_org "
-  (b:func$entry)
-  (add-to-list 'gnus-posting-styles
-	       '((s-lex-format ".*gmail.com@${outMailAcctName}:.*")
-	         (from (s-lex-format "${outMailAcctName}mohsen.byname@gmail.com"))
-	         (bcc (s-lex-format "${outMailAcctName}@gmail.com"))
-	         ("Return-Path" (s-lex-format "${outMailAcctName}@gmail.com"))
-	         ("X-Envelope" (s-lex-format "${outMailAcctName}@gmail.com"))
-	         ("X-Message-SMTP-Method" "qmail")
-	         )
-	       t)
-  )
+;; ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mrm:aas:resource:gnus:gmail|postingStyles" :advice ()
+;; (orgCmntBegin "
+;; *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mrm:aas:resource:gnus:gmail|postingStyles>>   [[elisp:(org-cycle)][| ]]
+;; " orgCmntEnd)
+;; (cl-defun b:mrm:aas:resource:gnus:gmail|postingStyles (
+;; ;;;#+END:
+;;                                             &key
+;;                                             (outMailAcctName "")
+;;                                             )
+;;   " #+begin_org
+;; ** DocStr:
+;; #+end_org "
+;;   (b:func$entry)
+;;   (add-to-list 'gnus-posting-styles
+;; 	       '((s-lex-format ".*gmail.com@${outMailAcctName}:.*")
+;; 	         (from (s-lex-format "${outMailAcctName}mohsen.byname@gmail.com"))
+;; 	         (bcc (s-lex-format "${outMailAcctName}@gmail.com"))
+;; 	         ("Return-Path" (s-lex-format "${outMailAcctName}@gmail.com"))
+;; 	         ("X-Envelope" (s-lex-format "${outMailAcctName}@gmail.com"))
+;; 	         ("X-Message-SMTP-Method" "qmail")
+;; 	         )
+;; 	       t)
+;;   )
 
 
+;; (orgCmntBegin "
+;; ** Basic Usage:
+;; #+BEGIN_SRC emacs-lisp
+;; (b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
+;; #+END_SRC
 
-(orgCmntBegin "
-** Basic Usage:
-#+BEGIN_SRC emacs-lisp
-(b:mrm:marmee:aas|ingestSvcInstance (symbol-name 'piu_mbFullUsage) (symbol-name 'aas/marmee/qmail/alias))
-#+END_SRC
+;; #+RESULTS:
+;; : b:gnus:vault/credentials-add NOTYET
 
-#+RESULTS:
-: b:gnus:vault/credentials-add NOTYET
-
-" orgCmntEnd)
-
-
+;; " orgCmntEnd)
 
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil

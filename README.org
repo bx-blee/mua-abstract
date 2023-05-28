@@ -6,6 +6,9 @@ Think of this as a Meta Emacs-MUA Configuration And Management package.
 * Mapping Of Key Abstractions Of Blee-Gnus Model Onto Emacs-Gnus
 Emacs-Gnus is a large and complex beast.
 Part of that complexity is due to its lack of clear model and terminology.
+Actually Gnus has a clear model which is clear to Lars.
+The problem is that Lars's model reflects much history and choices that
+primary make sense to him -- not to the rest of us.
 This module creates a concise model and terminology on top of Emacs-Gnus.
 We then use this model and terminology of Blee-Gnus to configure Emacs-Gnus.
 We offer this Blee-Gnus Model to Emacs-Gnus developers with some encouragement.
