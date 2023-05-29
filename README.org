@@ -1,14 +1,20 @@
 
 * Summary: Blee Messging Resource Model (b:mrm) And Terminology For Emacs-MUAs
 Emacs-MUAs lack formal model and terminology. This has resulted to chaos.
-b:mrm provides a model and terminoly for use of MUAs and Gnus in particular.
+b:mrm provides a model and terminology for use of MUAs and Gnus in particular.
 Think of this as a Meta Emacs-MUA Configuration And Management package.
+
 * Mapping Of Key Abstractions Of Blee-Gnus Model Onto Emacs-Gnus
-Emacs-Gnus is a large and complex beast.
-Part of that complexity is due to its lack of clear model and terminology.
-Actually Gnus has a clear model which is clear to Lars.
-The problem is that Lars's model reflects much history and choices that
-primary make sense to him -- not to the rest of us.
-This module creates a concise model and terminology on top of Emacs-Gnus.
-We then use this model and terminology of Blee-Gnus to configure Emacs-Gnus.
-We offer this Blee-Gnus Model to Emacs-Gnus developers with some encouragement.
+Emacs-Gnus is a large and complex beast. Part of that complexity is due to its
+lack of clear model and terminology.Actually Gnus has a clear model which is
+clear to Lars. The problem is that Lars's model goes back to usenet and reflects
+much history and choices that primary make sense to him -- not to the rest of
+us.
+
+This module creates a concise model and terminology on top of Emacs-Gnus. We
+then use this model and terminology of Blee-Gnus to configure Emacs-Gnus. We
+offer this Blee-Gnus Model to Emacs-Gnus developers with some encouragement.
+
+abstract-mua primarily does two things:
+
+1) It adopts the  split-mua model and

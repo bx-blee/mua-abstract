@@ -74,9 +74,7 @@ Specifies imap and submission protocol parameters of Gmail.
   (when (string=
          (get 'b:mrm:inMail:manifest 'retrievablesResource-method)
          (plist-get b:mrm:retrievables::methods 'limap))
-    (put 'b:mrm:inMail:manifest  'imap-address "imap.gmail.com")
-    (put 'b:mrm:inMail:manifest  'imap-port "imaps")
-    (put 'b:mrm:inMail:manifest  'imap-stream "ssl")
+    (put 'b:mrm:inMail:manifest  'imap-stream "shell")
     )
 
   )
