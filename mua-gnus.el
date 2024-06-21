@@ -216,6 +216,7 @@ SCHEDULED: <2022-04-29 Fri>
           ($injection-resource (get 'b:mrm:outMail:manifest 'injection-resource))
           ($expiry-target "nnml:expired")
           ($expiry-wait 7)
+          ($mailService-regExp (s-lex-format ".*${$mailService-name}.*"))
           )
     (when (string= $injection-resource "gmail")
       (setq $expiry-target (s-lex-format "nnimap+${$mailService-name}:[Gmail]/Trash"))
@@ -239,7 +240,7 @@ SCHEDULED: <2022-04-29 Fri>
     (add-to-list 'gnus-posting-styles
                  (first
 	          `(
-                    (,$mailService-name   ; Matches Gnus group called $mailService-name
+                    (,$mailService-regExp   ; Matches Gnus group called $mailService-name
                      (from ,$user-acct)
                      (bcc ,$user-acct)
                      ("Return-Path" ,$user-acct)
@@ -256,7 +257,7 @@ SCHEDULED: <2022-04-29 Fri>
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:gnus:outMail|configure)
+(print (b:gnus:outMail|configure))
 #+END_SRC
 " orgCmntEnd)
 
